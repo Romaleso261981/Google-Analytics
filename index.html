@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Example Form</title>
+  </head>
+  <body>
+    <form id="orderForm">
+      <input type="hidden" name="utm_source" value="google" />
+      <input type="hidden" name="utm_medium" value="cpc" />
+      <input type="hidden" name="utm_campaign" value="spring_sale" />
+      <input type="hidden" name="utm_term" value="sale_50" />
+      <input type="hidden" name="utm_content" value="fb_button" />
+      <input type="hidden" name="fbp" value="fb.1.123456789.987654321" />
+      <input
+        type="hidden"
+        name="fbc"
+        value="fb.1.123456789.PAAaYL-TakRC-ZbPyT8eM9qcas97x-m_28rVh0jAjb3giIWnyA"
+      />
+      <input type="hidden" name="ip_address" value="192.168.1.1" />
+      <input
+        type="hidden"
+        name="user_agent"
+        value="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.1234.567 Safari/537.36"
+      />
+      <button type="submit">Submit Order</button>
+    </form>
+
+    <script>
+      document
+        .getElementById("orderForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          const formData = new FormData(event.target);
+          const data = {};
+
+          formData.forEach((value, key) => {
+            data[key] = value;
+          });
+
+          fetch("http://localhost:3000/webhook", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+          })
+            .then((response) => response.json())
+            .then((result) => {
+              console.log("Success:", result);
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+        });
+    </script>
+  </body>
+</html>

@@ -39,7 +39,8 @@
             data[key] = value;
           });
 
-          fetch("http://localhost:3000/webhook", {
+          fetch("http://deshevakovka.up.railway.app/webhook", {
+            // fetch("http://localhost:8080/webhook", {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
